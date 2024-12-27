@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\PasswordRecord;
 use Illuminate\Console\Command;
 use function Laravel\Prompts\info;
-use function Laravel\Prompts\table;
 use function Laravel\Prompts\text;
 use function Laravel\Prompts\error;
 use Illuminate\Support\Facades\Cache;
