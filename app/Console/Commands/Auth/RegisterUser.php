@@ -3,7 +3,9 @@
 namespace App\Console\Commands\Auth;
 
 use App\Models\User;
+use App\Rules\PreventCommonPassword;
 use Illuminate\Console\Command;
+use Illuminate\Validation\Rules\Password;
 use function Laravel\Prompts\text;
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\warning;
@@ -41,17 +43,17 @@ class RegisterUser extends Command
         $email = text(
             label: 'Enter your email:',
             required: true,
-            validate: ['string', 'email']
+            validate: ['string', 'email', 'unique:users,email']
         );
         $password = password(
             label: 'Enter your password:',
             required: true,
-            validate: ['min:2', 'max:50']
+            validate: [Password::min(6), new PreventCommonPassword]
         );
         $passwordConfirmation = password(
             label: 'Confirm your password:',
             required: true,
-            validate: ['min:2', 'max:50']
+            validate: [Password::min(6), new PreventCommonPassword]
         );
 
         if ($password !== $passwordConfirmation) {
